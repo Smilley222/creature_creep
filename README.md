@@ -10,11 +10,33 @@ Tap a walkable tile to move. Use the party, CreepDex, and battle buttons in the 
 
 ## Project status
 
-- `index.html`: original V5 Tap-to-Move prototype, imported without gameplay changes.
+- `index.html`: V5 prototype plus the first V6 milestone: lead follower and Rootcall crossing.
 - `docs/V5_README.txt`: original prototype instructions.
-- `docs/CREATURE_CREEP_SPECIES_REGISTRY.md`: V6 design draft, not a claim of implemented features.
+- `docs/CREATURE_CREEP_SPECIES_REGISTRY.md`: broader V6 design draft; only the follower and first Rootcall obstacle are implemented so far.
 
-The imported HTML still has a V4 browser-tab title while its visible game header says V5. This is an existing cosmetic inconsistency preserved during import.
+The existing browser-tab title and V5 header are retained; this is an incremental prototype update, not the full V6 design.
+
+## Follower and Rootcall
+
+Your selected party leader follows one tile behind you. Capture Thornback in tall grass, open Party, and make it the leader. Its evolutions can also use Rootcall.
+
+Walk to the west bank of the pond (tile 14, 8), beside the visible roots. Press **Rootcall** to grow a crossing, then tap the flower glade across the pond. Discovering it grants three Creep Cores once.
+
+The crossing and discovery are saved automatically. Existing V5 saves and control settings keep their original storage keys; older saves start with the crossing closed. The follower is visual only and does not block movement or trigger encounters.
+
+## Regression checks
+
+With Playwright available, serve the project locally and run:
+
+```sh
+python3 -m http.server 8765 --bind 127.0.0.1
+# In another terminal:
+node tests/rootcall.cjs
+```
+
+The browser check covers desktop and 390px touch viewports: old saves, custom controls, capture and lead selection, follower movement, blocked routes, field action guards, Rootcall, tap navigation, one-time rewards, and reload persistence. Set `GAME_URL` to use another local server or `CHROME_PATH` to use an existing Chromium executable.
+
+Manual device check: complete the same loop on a phone, try optional D-pad and keyboard movement, switch leaders, battle, then reload and verify progress.
 
 ## Development
 
@@ -22,4 +44,5 @@ Keep changes small and reviewable. Preserve existing saves and controls. Use bra
 
 ## Validation
 
-The imported inline JavaScript passes `node --check`. Gameplay and device testing remain required. Repository setup does not publish a hosted game or enable GitHub Pages.
+Inline JavaScript syntax and the focused desktop/touch browser regression checks pass. Physical-device testing and a full gameplay/balance pass remain outstanding. Repository setup does not publish a hosted game or enable GitHub Pages.
+
